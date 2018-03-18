@@ -160,7 +160,7 @@ $(function() {
 			 url: '/catalogs/'+$(this).attr('catalogid')+'?username='+username, 
 			 type: 'DELETE', 
 			 beforeSend: function(request) {
-                 request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token 
+                 request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token
              },
 			 success: function(data){
 				 if (data.success) {

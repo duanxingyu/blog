@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '1.5.2.RELEASE'
     }
     // 自定义  Thymeleaf 和 Thymeleaf Layout Dialect 的版本
     ext['thymeleaf.version'] = '3.0.3.RELEASE'
@@ -50,7 +50,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
 
     // 添加 Spring Boot 开发工具依赖
-    //compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.springframework.boot:spring-boot-devtools")
 
     // 添加 Spring Data JPA 的依赖
     compile('org.springframework.boot:spring-boot-starter-data-jpa')

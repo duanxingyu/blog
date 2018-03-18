@@ -6,32 +6,38 @@ import com.dxy.blog.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+
+/**
+ * Blog 服务接口.
+ *
+ * @since 1.0.0 2017年4月7日
+ * @author <a href="https://waylau.com">Way Lau</a>
+ */
 public interface BlogService {
     /**
-     * 保存博客
-     * @param blog
+     * 保存Blog
+     * @param EsBlog
      * @return
      */
     Blog saveBlog(Blog blog);
 
     /**
-     * 删除博客
+     * 删除Blog
      * @param id
+     * @return
      */
     void removeBlog(Long id);
 
     /**
-     * 根据id获取博客
+     * 根据id获取Blog
      * @param id
      * @return
      */
     Blog getBlogById(Long id);
 
     /**
-     * 根据用户名，进行分页模糊查询（最新）
+     * 根据用户名进行分页模糊查询（最新）
      * @param user
-     * @param title
-     * @param pageable
      * @return
      */
     Page<Blog> listBlogsByTitleVote(User user, String title, Pageable pageable);
@@ -39,11 +45,9 @@ public interface BlogService {
     /**
      * 根据用户名进行分页模糊查询（最热）
      * @param user
-     * @param title
-     * @param pageable
      * @return
      */
-    Page<Blog> listBlogsByTitleVoteAndSort(User user, String title, Pageable pageable);
+    Page<Blog> listBlogsByTitleVoteAndSort(User suser, String title, Pageable pageable);
 
     /**
      * 根据分类进行查询
@@ -52,7 +56,6 @@ public interface BlogService {
      * @return
      */
     Page<Blog> listBlogsByCatalog(Catalog catalog, Pageable pageable);
-
     /**
      * 阅读量递增
      * @param id
@@ -73,8 +76,7 @@ public interface BlogService {
      * @param commentId
      * @return
      */
-    Blog removeComment(Long blogId, Long commentId);
-
+    void removeComment(Long blogId, Long commentId);
 
     /**
      * 点赞
@@ -89,5 +91,5 @@ public interface BlogService {
      * @param voteId
      * @return
      */
-    Blog removeVote(Long blogId, Long voteId);
+    void removeVote(Long blogId, Long voteId);
 }

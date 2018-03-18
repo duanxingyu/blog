@@ -38,8 +38,12 @@ public class BlogController {
         List<EsBlog>list=null;
         boolean isEmpty=true;
         try {
-            if (order.equals("hot")) {
+            if (order.equals("hot")) {          //最热查询
                 Sort sort = new Sort(Sort.Direction.DESC, "readSize", "commentSize", "voteSize", "createTime");
+                Pageable pageable = new PageRequest(pageIndex, pageSize, sort);
+                page = esBlogService.listHotestEsBlogs(keyword, pageable);
+            } else if (order.equals("new")) {       //最新查询
+                Sort sort = new Sort(Sort.Direction.DESC, "createTime");
                 Pageable pageable = new PageRequest(pageIndex, pageSize, sort);
                 page = esBlogService.listNewestEsBlogs(keyword, pageable);
             }
@@ -48,7 +52,7 @@ public class BlogController {
             Pageable pageable = new PageRequest(pageIndex, pageSize);
             page = esBlogService.listEsBlogs(pageable);
         }
-        list=page.getContent();
+        list=page.getContent();     //当前所在页面数据列表
         model.addAttribute("order", order);
         model.addAttribute("keyword", keyword);
         model.addAttribute("page", page);

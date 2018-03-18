@@ -49,8 +49,8 @@ $(function() {
 			 url: '/comments', 
 			 type: 'GET', 
 			 data:{"blogId":blogId},
-			 beforeSend: function(request) {
-	             request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token 
+             beforeSend: function(request) {
+	             request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token
 	         },
 			 success: function(data){
 				$("#mainContainer").html(data);
@@ -103,6 +103,7 @@ $(function() {
 			 beforeSend: function(request) {
                  request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token 
              },
+
 			 success: function(data){
 				 if (data.success) {
 					 // 获取评论列表

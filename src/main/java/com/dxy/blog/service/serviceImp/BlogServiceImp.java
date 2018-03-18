@@ -118,7 +118,7 @@ public class BlogServiceImp implements BlogService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Comment comment = new Comment(user, commentContent);
         originalBlog.addComment(comment);
-        return originalBlog;
+        return this.saveBlog(originalBlog) ;
     }
 
     /**
@@ -129,11 +129,10 @@ public class BlogServiceImp implements BlogService {
      * @return
      */
     @Override
-    public Blog removeComment(Long blogId, Long commentId) {
+    public void removeComment(Long blogId, Long commentId) {
         Blog originalBlog = blogRepository.findOne(blogId);
         originalBlog.removeComment(commentId);
         this.saveBlog(originalBlog);
-        return originalBlog;
     }
 
     /**
@@ -162,10 +161,9 @@ public class BlogServiceImp implements BlogService {
      * @return
      */
     @Override
-    public Blog removeVote(Long blogId, Long voteId) {
+    public void removeVote(Long blogId, Long voteId) {
         Blog originalBlog = blogRepository.findOne(blogId);
         originalBlog.removeVote(voteId);
         this.saveBlog(originalBlog);
-        return originalBlog;
     }
 }

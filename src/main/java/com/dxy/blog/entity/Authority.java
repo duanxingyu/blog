@@ -9,7 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 public class Authority implements GrantedAuthority {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 2L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增长策略
     private Long id;//用户唯一标识

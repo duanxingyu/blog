@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
-    <title>page</title>
 </head>
 <body>
+
 <nav data-th-fragment="page" data-th-if="${page.totalPages gt 0}" data-th-object="${page}">
+
     <!-- 处理页数小于等于7 的情况 -->
-    <ul class="pagination" data-th-if="${page.totalPages le 7}">
-        <!--总记录数-->
+    <ul class="pagination" data-th-if="${page.totalPages le 7}" >
+        <!-- 总记录数 -->
         <li class="tbpage-total-elements disabled">共[[${page.totalElements}]]条</li>
-        <!--页面大小-->
+
+        <!-- 页面大小 -->
         <select class="custom-select tbpage-size" data-th-attr="pageIndex=${page.number}">
-            <option data-th-each="i:${#arrays.toIntegerArray({5,10,40,100})}" data-th-value="${i}"
-                    data-th-selected="${i eq page.size}" data-th-text="${i}">
-            </option>
+            <option data-th-each="i : ${#arrays.toIntegerArray({5,10,40,100})}" data-th-value="${i}"
+                    data-th-selected="${i eq page.size}" data-th-text="${i}"></option>
         </select>
-        <!--上一页-->
-        <li class="page-item" data-th-classappend="*{first}?'disabled':''">
-            <a href="javascript:void(0);" class="page-link tbpage-item" data-th-attr="pageIndex=${page.number}-1"
-               aria-label="Previous">
-            <span aria-hidden="true"><<</span>
+
+        <!-- 上一页 -->
+        <li class="page-item" data-th-classappend="*{first} ? 'disabled' : ''">
+            <a href="javascript:void(0);" class="page-link tbpage-item" data-th-attr="pageIndex=${page.number} - 1" aria-label="Previous">
+                <span aria-hidden="true">«</span>
             </a>
         </li>
+
         <!-- 迭代生成页码 -->
         <li class="page-item" data-th-each="i : ${#numbers.sequence(1, page.totalPages)}"
-            data-th-classappend="${(page.number + 1) eq i} ? 'active' : ''">
+            data-th-classappend="${(page.number + 1) eq i} ? 'active' : ''" >
             <a class="page-link tbpage-item" data-th-attr="pageIndex=${i} - 1" href="javascript:void(0);">
                 <span data-th-text="${i}"></span>
             </a>
@@ -36,20 +35,20 @@
 
         <!-- 下一页 -->
         <li class="page-item" data-th-classappend="*{last} ? 'disabled' : ''">
-            <a href="javascript:void(0);" class="page-link tbpage-item" data-th-attr="pageIndex=${page.number} + 1"
-               aria-label="Next">
+            <a href="javascript:void(0);" class="page-link tbpage-item" data-th-attr="pageIndex=${page.number} + 1" aria-label="Next">
                 <span aria-hidden="true">»</span>
             </a>
         </li>
     </ul>
 
-    <!--处理页数大于7的情况-->
-    <ul class="pagination" data-th-if="${page.totalPages gt 7}">
-        <!--总记录数-->
-        <li class="tbpage-total-elements disabled">共[[$page.totalElements]]条</li>
-        <!--页面大小-->
+    <!-- 处理页数大于7 的情况 -->
+    <ul class="pagination" data-th-if="${page.totalPages gt 7}" >
+        <!-- 总记录数 -->
+        <li class="tbpage-total-elements disabled">共[[${page.totalElements}]]条</li>
+
+        <!-- 页面大小 -->
         <select class="custom-select tbpage-size" data-th-attr="pageIndex=${page.number}">
-            <option data-th-each="i:${#arrays.toIntegerArray({5,10,40,100})}" data-th-value="${i}"
+            <option data-th-each="i : ${#arrays.toIntegerArray({5,10,40,100})}" data-th-value="${i}"
                     data-th-selected="${i eq page.size}" data-th-text="${i}"></option>
         </select>
 
@@ -128,6 +127,9 @@
             </a>
         </li>
     </ul>
+
+
 </nav>
+
 </body>
 </html>

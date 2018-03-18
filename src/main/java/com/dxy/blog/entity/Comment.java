@@ -13,8 +13,8 @@ import java.sql.Timestamp;
  */
 @Entity // 实体
 public class Comment implements Serializable {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 2L;
 	@Id // 主键
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 自增长策略
 	private Long id; // 用户的唯一标识

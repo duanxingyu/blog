@@ -18,7 +18,8 @@ import java.util.List;
 
 @Entity
 public class User implements UserDetails, Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 2L;
     @Id //主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增
     private Long id;

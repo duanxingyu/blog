@@ -17,10 +17,9 @@ import java.sql.Timestamp;
 @Document(indexName = "blog", type = "blog")
 @XmlRootElement // MediaType 转为 XML
 public class EsBlog implements Serializable {
- 
-	private static final long serialVersionUID = 1L;
 
 
+	private static final long serialVersionUID = 2L;
 	@Id  // 主键
 	private String id;  
 	@Field(index = FieldIndex.not_analyzed)    

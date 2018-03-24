@@ -3,6 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="~{fragments/header :: header}">
+
 </head>
 <body>
 <!-- Page Content -->
@@ -34,10 +35,10 @@
 			</div>
 
 
-			<div class="row ">
+			<div class="row " style="margin-top: 10px">
 				<div class="col-md-12">
 					<h5><i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<a href="mailto:waylau521@gmail.com" th:href="'mailto:'+ ${user.email}" th:text="${user.email}">waylau521@gmail.com</a></h5>
+						<a href="mailto:waylau521@gmail.com" th:href="'mailto:'+ ${user.email}" th:text="${user.email}"></a></h5>
 				</div>
 			</div>
 
@@ -50,7 +51,7 @@
 																								data-target="#flipFlop" role="button"><i
 							class="fa fa-plus" aria-hidden="true"></i></a></h5>
 
-					<ul class="list-group" th:each="catalog : ${catalogs}" th:object="${catalog}">
+					<ul class="list-group" th:each="catalog : ${catalogs}" th:object="${catalog}" style="padding: .55rem 1.25rem;">
 						<div class="blog-list-group-item">
 
 
@@ -59,7 +60,7 @@
 							</a>
 							<span class="blog-right">
 	                		<a href="javascript:void(0)" th:if="${isCatalogsOwner}" class="blog-edit-catalog" data-toggle="modal"
-							   data-target="#flipFlop" role="button" th:attr="catalogId=*{id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							   data-target="#flipFlop" role="button" th:attr="catalogId=*{id}" style="padding: .75rem 1.25rem;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 	                		<a href="javascript:void(0)" th:if="${isCatalogsOwner}" class="blog-delete-catalog" th:attr="catalogId=*{id}"><i class="fa fa-times" aria-hidden="true"></i></a>
 	            		</span>
 

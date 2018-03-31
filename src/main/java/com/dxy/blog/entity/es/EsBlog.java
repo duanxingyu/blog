@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 public class EsBlog implements Serializable {
 
 
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 1L;
 	@Id  // 主键
 	private String id;  
 	@Field(index = FieldIndex.not_analyzed)    

@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")  //指定角色权限才能操作方法
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")  //指定角色权限才能操作方法
 public class UserController {
     @Autowired
     private UserService userService;
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     /**
-     * 获取form表单页面
+     * 获取创建表单页面
      *
      * @param model
      * @return
@@ -74,35 +74,35 @@ public class UserController {
      * @param authorityId
      * @return
      */
-    @PostMapping
-    public ResponseEntity<Response> create(User user, Long authorityId) {
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authorityService.getAuthorityById(authorityId));
-        user.setAuthorities(authorities);
-
-        if (user.getId() == null) {
-            user.setEncodePassword(user.getPassword());
-        } else {
-            User originalUser = userService.getUserById(user.getId());
-            String rawPassword = originalUser.getPassword();
-            PasswordEncoder encoder = new BCryptPasswordEncoder();
-            String encodePasswd = encoder.encode(user.getPassword());
-            boolean isMatch = encoder.matches(rawPassword, encodePasswd);
-            if (!isMatch) {
-                user.setEncodePassword(user.getPassword());
-
-            } else {
-                user.setPassword(user.getPassword());
-
-            }
-        }
-        try {
-            userService.saveOrUpateUser(user);
-        } catch (ConstraintViolationException e) {
-            return ResponseEntity.ok().body(new Response(false, ConstraintViolationExceptionHandler.getMessage(e)));
-        }
-        return ResponseEntity.ok().body(new Response(true, "处理成功", user));
-    }
+//    @PostMapping
+//    public ResponseEntity<Response> create(User user, Long authorityId) {
+//        List<Authority> authorities = new ArrayList<>();
+//        authorities.add(authorityService.getAuthorityById(authorityId));
+//        user.setAuthorities(authorities);
+//
+//        if (user.getId() == null) {
+//            user.setEncodePassword(user.getPassword());
+//        } else {
+//            User originalUser = userService.getUserById(user.getId());
+//            String rawPassword = originalUser.getPassword();
+//            PasswordEncoder encoder = new BCryptPasswordEncoder();
+//            String encodePasswd = encoder.encode(user.getPassword());
+//            boolean isMatch = encoder.matches(rawPassword, encodePasswd);
+//            if (!isMatch) {
+//                user.setEncodePassword(user.getPassword());
+//
+//            } else {
+//                user.setPassword(user.getPassword());
+//
+//            }
+//        }
+//        try {
+//            userService.saveOrUpateUser(user);
+//        } catch (ConstraintViolationException e) {
+//            return ResponseEntity.ok().body(new Response(false, ConstraintViolationExceptionHandler.getMessage(e)));
+//        }
+//        return ResponseEntity.ok().body(new Response(true, "处理成功", user));
+//    }
 
     /**
      * 保存或修改用户
@@ -110,16 +110,21 @@ public class UserController {
      * @param user
      * @return
      */
-//    @PostMapping
-//    public ResponseEntity<Response> saveOrUpdateUser(User user) {
-//
-//        try {
-//            userService.saveUser(user);
-//        } catch (ConstraintViolationException e) {
-//            return ResponseEntity.ok().body(new Response(false, ConstraintViolationExceptionHandler.getMessage(e)));
-//        }
-//        return ResponseEntity.ok().body(new Response(true, "处理成功", user));
-//    }
+    @PostMapping
+    public ResponseEntity<Response> saveOrUpateUser(User user, Long authorityId) {
+
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authorityService.getAuthorityById(authorityId));
+        user.setAuthorities(authorities);
+
+        try {
+            userService.saveOrUpateUser(user);
+        }  catch (ConstraintViolationException e)  {
+            return ResponseEntity.ok().body(new Response(false, ConstraintViolationExceptionHandler.getMessage(e)));
+        }
+
+        return ResponseEntity.ok().body(new Response(true, "处理成功", user));
+    }
 
     /**
      * 刪除用戶

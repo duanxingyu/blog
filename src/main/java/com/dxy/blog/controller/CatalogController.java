@@ -74,22 +74,22 @@ public class CatalogController {
     }
 
     /**
-     *
      * 删除分类
-     * @param name
+     * @param username
      * @param id
      * @return
      */
     @DeleteMapping("/{id}")
-    @PreAuthorize("authentication.name.equals(#username)")//指定用户才能操作方法
-    public ResponseEntity<Response> delete(String name, @PathVariable("id") Long id) {
+    @PreAuthorize("authentication.name.equals(#username)")  // 指定用户才能操作方法
+    public ResponseEntity<Response> delete(String username, @PathVariable("id") Long id) {
         try {
             catalogService.removeCatalog(id);
-        } catch (ConstraintViolationException e) {
+        } catch (ConstraintViolationException e)  {
             return ResponseEntity.ok().body(new Response(false, ConstraintViolationExceptionHandler.getMessage(e)));
         } catch (Exception e) {
             return ResponseEntity.ok().body(new Response(false, e.getMessage()));
         }
+
         return ResponseEntity.ok().body(new Response(true, "处理成功", null));
     }
 

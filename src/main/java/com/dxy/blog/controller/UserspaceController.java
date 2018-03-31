@@ -14,6 +14,7 @@ import com.dxy.blog.service.UserService;
 import com.dxy.blog.util.ConstraintViolationExceptionHandler;
 import com.dxy.blog.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,7 +59,15 @@ public class UserspaceController {
     @Autowired
     private CatalogService catalogService;
 
+    @Value("${file.server.url}")
+    private String fileServerUrl;
 
+    /**
+     * 用户主页
+     * @param username
+     * @param model
+     * @return
+     */
     @GetMapping("/{username}")
     public String userSpace(@PathVariable("username") String username, Model model) {
         User user = (User)userDetailsService.loadUserByUsername(username);
@@ -66,11 +75,18 @@ public class UserspaceController {
         return "redirect:/u/" + username + "/blogs";
     }
 
+    /**
+     * 获取个人设置页面
+     * @param username
+     * @param model
+     * @return
+     */
     @GetMapping("/{username}/profile")
     @PreAuthorize("authentication.name.equals(#username)")
     public ModelAndView profile(@PathVariable("username") String username, Model model) {
         User  user = (User)userDetailsService.loadUserByUsername(username);
         model.addAttribute("user", user);
+        model.addAttribute("fileServerUrl", fileServerUrl);// 文件服务器的地址返回给客户端
         return new ModelAndView("/userspace/profile", "userModel", model);
     }
 
@@ -131,7 +147,18 @@ public class UserspaceController {
         return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
     }
 
-
+    /**
+     * 获取博客列表
+     * @param username
+     * @param order
+     * @param catalogId
+     * @param keyword
+     * @param async
+     * @param pageIndex
+     * @param pageSize
+     * @param model
+     * @return
+     */
     @GetMapping("/{username}/blogs")
     public String listBlogsByOrder(@PathVariable("username") String username,
                                    @RequestParam(value="order",required=false,defaultValue="new") String order,
@@ -247,6 +274,7 @@ public class UserspaceController {
         List<Catalog> catalogs = catalogService.listCatalogs(user);
 
         model.addAttribute("blog", new Blog(null, null, null));
+        model.addAttribute("fileServerUrl", fileServerUrl);// 文件服务器的地址返回给客户端
         model.addAttribute("catalogs", catalogs);
         return new ModelAndView("/userspace/blogedit", "blogModel", model);
     }
@@ -263,6 +291,7 @@ public class UserspaceController {
         List<Catalog> catalogs = catalogService.listCatalogs(user);
 
         model.addAttribute("blog", blogService.getBlogById(id));
+        model.addAttribute("fileServerUrl", fileServerUrl);// 文件服务器的地址返回给客户端
         model.addAttribute("catalogs", catalogs);
         return new ModelAndView("/userspace/blogedit", "blogModel", model);
     }
@@ -303,7 +332,6 @@ public class UserspaceController {
         } catch (Exception e) {
             return ResponseEntity.ok().body(new Response(false, e.getMessage()));
         }
-
         String redirectUrl = "/u/" + username + "/blogs/" + blog.getId();
         return ResponseEntity.ok().body(new Response(true, "处理成功", redirectUrl));
     }

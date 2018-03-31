@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 public class User implements UserDetails, Serializable {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1L;
     @Id //主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增
     private Long id;
@@ -45,7 +45,7 @@ public class User implements UserDetails, Serializable {
     @Column(nullable = false, length = 50)
     private String password;
 
-    @Column(length = 200)
+    @Column(length = 500)
     private String avatar;  //头像图片地址
 
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)

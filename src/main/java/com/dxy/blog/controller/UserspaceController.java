@@ -41,8 +41,6 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 用户主页空间控制器.
  *
- * @since 1.0.0 2017年3月25日
- * @author <a href="https://waylau.com">Way Lau</a>
  */
 @Controller
 @RequestMapping("/u")
